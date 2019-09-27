@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "ThreadPool.h"
+#include "ThreadWorkerController.h"
 #include <QDebug>
 namespace TaoThread
 {
@@ -12,7 +13,16 @@ namespace TaoThread
         {
             m_id = id;
 
-            ThreadPool::getInstance()->work(
+//            ThreadPool::getInstance()->work(
+//                [id](){
+//                    qWarning() << QThread::currentThreadId() << "do" << id;
+//                    return true;
+//                },
+//                [this, id](bool result){
+//                    qWarning() <<QThread::currentThreadId() << "work result:" << result << id;
+//                    showId();
+//                });
+            ThreadController::getInstance()->work(
                 [id](){
                     qWarning() << QThread::currentThreadId() << "do" << id;
                     return true;
@@ -20,7 +30,8 @@ namespace TaoThread
                 [this, id](bool result){
                     qWarning() <<QThread::currentThreadId() << "work result:" << result << id;
                     showId();
-                });
+                }
+                );
         }
         void showId()
         {
