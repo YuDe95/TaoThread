@@ -33,3 +33,25 @@ ThreadPool::getInstance()->work(
                 });
 ```
 ![](preview.png)
+
+--
+
+2019/9/30 更新
+ThreadPool没有取消操作，直接杀线程会对ThreadPool造成不良的影响。
+为了支持取消操作，封装了Controller-worker模型。杀QThread是可控的。
+```C++
+taskId = ThreadController::getInstance()->work(
+                [id](){
+                    qWarning() << QThread::currentThreadId() << "do" << id;
+                    return true;
+                },
+                [this, id](bool result){
+                    qWarning() <<QThread::currentThreadId() << "work result:" << result << id;
+                    showId();
+                });
+```
+取消操作是
+```C++
+ThreadController::getInstance()->cancle(taskId);
+```
+
