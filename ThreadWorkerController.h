@@ -15,9 +15,8 @@ public:
 signals:
     void workFinished(bool, int);
 public slots:
-    void doWork(int id)
+    void doWork()
     {
-        if (id != m_id) {return;}
         bool ret = m_workCall();
         emit workFinished(ret, m_id);
     }
@@ -59,11 +58,9 @@ public:
         obj->moveToThread(thread);
 
         connect(thread, &QThread::finished, obj, &QObject::deleteLater);
-        connect(this, &ThreadController::doWork, obj, &ThreadWorker::doWork);
+        connect(thread, &QThread::started, obj, &ThreadWorker::doWork);
         connect(obj, &ThreadWorker::workFinished, this, &ThreadController::onWorkFinished);
         thread->start();
-        //一个信号对应多个线程worker。惊群效应。后续再优化。
-        emit doWork(m_rollId);
         return m_rollId;
     }
     void cancle(int id)
@@ -78,8 +75,6 @@ public:
         }
         m_resultCallback.remove(id);
     }
-signals:
-    void doWork(int);
 protected slots :
     void onWorkFinished(bool ok, int id)
         {

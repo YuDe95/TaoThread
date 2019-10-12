@@ -24,7 +24,16 @@ namespace TaoThread
 //                });
             ThreadController::getInstance()->work(
                 [id](){
+                    int count = 0;
                     qWarning() << QThread::currentThreadId() << "do" << id;
+                    while(1) {
+                        qWarning() << QThread::currentThreadId() << "running" << id;
+                        QThread::sleep(3);
+                        count++;
+                        if (count >= id) {
+                            break;
+                        }
+                    }
                     return true;
                 },
                 [this, id](bool result){
