@@ -77,7 +77,7 @@ public:
     }
 protected slots :
     void onWorkFinished(bool ok, int id)
-        {
+    {
         auto it = m_threadMap.find(id);
         if (it != m_threadMap.end())
         {
