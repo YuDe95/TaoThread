@@ -47,7 +47,7 @@ namespace TaoThread
             m_rollId++;
             return m_rollId - 1;
         }
-        bool cancle(uint32_t id)
+        bool cancel(uint32_t id)
         {
             if (m_objMap.contains(id))
             {

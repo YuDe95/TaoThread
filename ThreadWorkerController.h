@@ -63,7 +63,7 @@ public:
         thread->start();
         return m_rollId;
     }
-    void cancle(int id)
+    void cancel(int id)
     {
         auto it = m_threadMap.find(id);
         if (it != m_threadMap.end())

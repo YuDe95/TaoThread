@@ -93,6 +93,6 @@ taskId = ThreadController::getInstance()->work(
 ```
 取消操作是
 ```C++
-ThreadController::getInstance()->cancle(taskId);
+ThreadController::getInstance()->cancel(taskId);
 ```
 
